@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: E-Hotel API
+  version: 1.0.0
+paths:
+  /:
+    get:
+      summary: Test route
+      responses:
+        '200':
+          description: Server is running
+  /api/hotels:
+    get:
+      summary: List hotels
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    stars:
+                      type: integer
