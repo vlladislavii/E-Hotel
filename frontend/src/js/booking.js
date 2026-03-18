@@ -122,4 +122,17 @@ function updateTotalPrice() {
 	document.getElementById('total-booking-price').textContent = `$${finalTotal.toFixed(2)}`;
 }
 
+const bookingForm = document.getElementById('booking-form');
+if (bookingForm) {
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        alert('Booking confirmed successfully!');
+
+        const baseUrl = import.meta.env.BASE_URL;
+        
+        window.location.href = `${baseUrl}src/html/stay-management.html`;
+    });
+}
+
 document.addEventListener('DOMContentLoaded', initBooking);

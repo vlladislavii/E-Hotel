@@ -115,7 +115,10 @@ function goToBooking(roomId) {
     const dateFrom = document.getElementById('date-from').value;
     const dateTo = document.getElementById('date-to').value;
     
-    let url = `/src/html/booking.html?RoomId=${roomId}`;
+    const baseUrl = import.meta.env.BASE_URL;
+    
+    let url = `${baseUrl}src/html/booking.html?RoomId=${roomId}`;
+    
     if (dateFrom) url += `&from=${encodeURIComponent(dateFrom)}`;
     if (dateTo) url += `&to=${encodeURIComponent(dateTo)}`;
     

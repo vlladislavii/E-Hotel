@@ -3,31 +3,34 @@ async function initSidebar() {
     if (!container) return;
 
     try {
-        const isProd = window.location.hostname.includes('github.io');
-        const root = isProd ? '/E-Hotel' : '';
+        const baseUrl = import.meta.env.BASE_URL; 
         
-        const response = await fetch(`${root}/src/html/sidebar.html`);
+        const response = await fetch(`${baseUrl}sidebar.html`);
         
-        if (!response.ok) throw new Error(response.status);
+        if (!response.ok) throw new Error(`Sidebar load status: ${response.status}`);
         
-        container.innerHTML = await response.text();
+        const html = await response.text();
+        container.innerHTML = html;
 
         const currentPath = window.location.pathname;
         
         container.querySelectorAll('.nav-item').forEach(link => {
             const originalHref = link.getAttribute('href');
-            const fullHref = originalHref.startsWith('/') ? `${root}${originalHref}` : `${root}/${originalHref}`;
+            const cleanHref = originalHref.replace(/^(\.\/|\/)/, '');
+            const fullHref = `${baseUrl}${cleanHref}`;
             link.href = fullHref;
 
-            const isHome = (currentPath === `${root}/` || currentPath === `${root}/index.html`) && originalHref.includes('index.html');
-            const isExactPage = currentPath.includes(originalHref) && !originalHref.includes('index.html');
+            const isHome = (currentPath === baseUrl || currentPath === `${baseUrl}index.html`) && cleanHref.includes('index.html');
+            const isExactPage = currentPath.includes(cleanHref) && !cleanHref.includes('index.html');
 
             if (isHome || isExactPage) {
                 link.classList.add('active');
             }
         });
 
-        if (window.lucide) window.lucide.createIcons();
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
 
         const toggleBtn = container.querySelector('#menu-toggle');
         const content = container.querySelector('#sidebar-content');
@@ -37,6 +40,7 @@ async function initSidebar() {
                 content.classList.toggle('is-visible');
                 const icon = toggleBtn.querySelector('i');
                 const isOpen = content.classList.contains('is-visible');
+                
                 if (icon && window.lucide) {
                     icon.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
                     window.lucide.createIcons();
@@ -44,7 +48,7 @@ async function initSidebar() {
             };
         }
     } catch (err) {
-        console.error(err);
+        console.error("Sidebar Error:", err);
     }
 }
 

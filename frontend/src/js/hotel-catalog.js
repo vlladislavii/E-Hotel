@@ -9,7 +9,11 @@ function renderHotels(filteredList) {
         return;
     }
 
-    grid.innerHTML = filteredList.map(h => `
+    grid.innerHTML = filteredList.map(h => {
+    const baseUrl = import.meta.env.BASE_URL;
+    const targetUrl = `${baseUrl}src/html/search-availability.html?hotel=${encodeURIComponent(h.name)}`;
+
+    return `
         <div class="card hotel-card">
             <div class="card-content">
                 <h3 style="margin:0 0 10px 0">${h.name}</h3>
@@ -23,13 +27,13 @@ function renderHotels(filteredList) {
                     ${h.services.map(s => `<span class="service-tag">✓ ${s.name}</span>`).join('')}
                 </div>
                 <button class="btn btn-primary w-full" 
-                        onclick="window.location.href='/src/html/search-availability.html?hotel=${encodeURIComponent(h.name)}'">
+                        onclick="window.location.href='${targetUrl}'">
                     View Available Rooms
                 </button>
             </div>
         </div>
-    `).join('');
-    
+    `;
+}).join('');
     if (window.lucide) lucide.createIcons();
 }
 

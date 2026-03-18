@@ -11,6 +11,7 @@ export default defineConfig({
         catalog: resolve(__dirname, 'src/html/hotel-catalog.html'),
         search: resolve(__dirname, 'src/html/search-availability.html'),
         management: resolve(__dirname, 'src/html/stay-management.html'),
+        booking: resolve(__dirname, 'src/html/booking.html'),
       }
     }
   }
