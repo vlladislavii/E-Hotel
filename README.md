@@ -1,10 +1,15 @@
-# E-Hotel Information System
+# E-Hotel Web App
 
-**E-Hotel** — це інформаційна система для бронювання та оренди номерів у готелях відпочинкового курорту. Проєкт реалізований як частина навчальної програми з вебпрограмування.
+**E-Hotel** is an information system designed for booking and renting rooms in resort hotels.
 
-## Опис завдання
+## Task Description
 
-E-Hotel — це інформаційна система для бронювання номерів у готелях курорту. Курорт містить більше одного готелю, кожен з яких має назву, кількість зірок, адресу та кількість номерів. Кожен готель пропонує номери двох видів: одномісні та двомісні, відповідно до кількості ліжок. Турист може забронювати один або кілька номерів у готелі, зателефонувавши на рецепцію. Касир відповідає та запитує у туриста інформацію: період, кількість номерів, бажану якість та особисті дані, такі як ім'я та ID. Система повинна показувати ситуацію з бронюванням у будь-який момент, щоб касир міг перевірити, чи можна задовольнити запит. Якщо ні, касир може запропонувати альтернативи, наприклад, готель з іншою кількістю зірок або двомісний номер замість одномісного. Клієнт також може обрати додаткові послуги, такі як сніданок, вечеря або інтернет (якщо це можливо). Після того, як клієнт прийме рішення, він повідомить номер кредитної картки, а касир позначить номер як заброньований і видасть клієнту номер бронювання. Касир також повідомляє період, протягом якого клієнт може скасувати бронювання без штрафних санкцій. Гроші з кредитної картки не знімаються, якщо клієнт не скасує бронювання після закінчення пільгового періоду. Коли турист з'являється в офісі, він повинен пред'явити код бронювання. Якщо у нього його немає, він повинен пред'явити посвідчення особи, щоб знайти своє бронювання. Він також може вибрати продовження терміну перебування, якщо номер не заброньований. При виїзді з готелю турист може оплатити послуги готівкою або кредитною карткою, він отримує рахунок, а також купон, який він може використати для отримання знижки при наступному бронюванні на тому ж курорті. Система повинна генерувати щомісячну статистику: прибутки від номерів, які типи номерів бронювалися найчастіше, скільки бронювань було скасовано.
+E-Hotel is an information system for booking and hiring rooms in the hotels of a holiday resort. The holiday resort contains more than one hotel, each one with a name, number of stars, address and number of rooms. Each hotel offers rooms that can be of two kinds: single and double, according to the number of beds. 
+A tourist can book one or more rooms at the hotel by making a phone call to the front desk. A cashier answers and asks the tourist for information: period, number of rooms, desired quality and personal information such as the name and CNP. The system should show the booking situation at any moment so the cashier checks if the request can be satisfied. If not, the cashier can offer alternatives such as a hotel with a different number of stars of a double room instead of a single room. The client can also choose additional services such as breakfast, dinner or internet (if applicable).
+Once the client has decided he will communicate a credit card number and the cashier will mark the room as booked and release a booking number to the client. The cashier also communicates the period in which the client can cancel the reservation without penalization. The money is not extracted from the credit card unless the client cancels the booking after the grace period.
+When the tourist presents at the front office he must present the booking code. If he does not have it, he must present his ID card to retrieve his booking. He can also choose to extend the stay period if the room is not booked.
+When leaving the hotel the tourist can pay for his services either with cash or credit card and he receives a bill and also a coupon which he can use for discount when making other reservations at the same holiday resort.
+The system has to generate a monthly statistic: earnings from rooms, what type of rooms were mostly booked, how many bookings were canceled.
 
 ---
-**Автор:** Киселар Владислав, група ІС-32 (2026)
+**Author:** Vladyslav Kiselar (2026)
