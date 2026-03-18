@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/E-Hotel/', 
+  base: process.env.NODE_ENV === 'production' ? '/E-Hotel/' : '/',
   build: {
     outDir: 'dist',
   }
