@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Stay Management - E-Hotel</title>
+	<link rel="stylesheet" href="/src/css/style.css">
+	<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+	<div class="layout-wrapper">
+		<div id="sidebar-container"></div>
+
+		<div class="dashboard-container">
+			<header class="header">
+				<h2 class="title">Stay Management & Billing</h2>
+				<p class="subtitle">Manage current stays and view history</p>
+			</header>
+
+			<div class="card mb-6">
+				<div class="form-group" style="position: relative;">
+					<input type="text" id="stay-search" class="form-input" style="padding-left: 40px;" placeholder="Search by code or guest...">
+				</div>
+			</div>
+
+			<div class="card mb-6">
+				<div class="results-header">
+					<h3 id="active-title">Active Bookings</h3>
+				</div>
+				<div style="overflow-x: auto;">
+					<table class="management-table">
+						<thead>
+							<tr>
+								<th>Code</th>
+								<th>Guest</th>
+								<th>Hotel</th>
+								<th>Room</th>
+								<th>Check-In</th>
+								<th>Check-Out</th>
+								<th>Status</th>
+								<th style="text-align: right;">Actions</th>
+							</tr>
+						</thead>
+						<tbody id="active-table-body"></tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="results-header">
+					<h3 id="past-title">Past Bookings</h3>
+				</div>
+				<div style="overflow-x: auto;">
+					<table class="management-table">
+						<thead>
+							<tr>
+								<th>Code</th>
+								<th>Guest</th>
+								<th>Hotel</th>
+								<th>Room</th>
+								<th>Check-In</th>
+								<th>Check-Out</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody id="past-table-body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="details-modal" class="modal-overlay">
+		<div class="card" style="width: 480px;">
+			<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+				<h3 id="details-code" class="text-blue-600">Booking Details</h3>
+				<button onclick="closeDetailsModal()" class="btn btn-ghost" style="padding: 5px;">✕</button>
+			</div>
+			<div id="details-content"></div>
+			<div id="cancel-section" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: none;">
+				<p id="cancel-warning" style="font-size: 0.75rem; color: #ea580c; margin-bottom: 10px;"></p>
+				<button id="cancel-booking-btn" class="btn btn-outline" style="width: 100%; border-color: #ef4444; color: #ef4444;">Cancel Reservation</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="extend-modal" class="modal-overlay">
+		<div class="card" style="width: 400px;">
+			<h3>Extend Stay</h3>
+			<div class="form-group mb-6">
+				<label>New Check-Out Date</label>
+				<input type="date" id="new-checkout-date" class="form-input">
+			</div>
+			<div style="display: flex; gap: 10px;">
+				<button onclick="closeExtendModal()" class="btn btn-outline" style="flex: 1;">Cancel</button>
+				<button id="confirm-extend-btn" class="btn btn-primary" style="flex: 1;">Confirm</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="/src/js/load-sidebar.js"></script>
+	<script  type="module" src="/src/js/stay-management.js"></script>
+</body>
+</html>

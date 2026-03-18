@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Catalog - E-Hotel</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <div id="sidebar-container"></div>
+
+        <div class="dashboard-container">
+            <header class="header">
+                <h2 class="title">Hotel Catalog</h2>
+                <p class="subtitle">Browse all resort hotels and services</p>
+            </header>
+
+            <div class="catalog-layout">
+                <aside class="filters-sidebar">
+                    <h3>Filters</h3>
+                    
+                    <div class="filter-group">
+                        <h4>Star Rating</h4>
+                        <div id="star-filters">
+                            <label><input type="checkbox" class="filter-star" value="5"> ⭐⭐⭐⭐⭐</label>
+                            <label><input type="checkbox" class="filter-star" value="4"> ⭐⭐⭐⭐</label>
+                            <label><input type="checkbox" class="filter-star" value="3"> ⭐⭐⭐</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Amenities</h4>
+                        <div id="service-filters">
+                            <label><input type="checkbox" class="filter-service" value="breakfast"> Breakfast</label>
+                            <label><input type="checkbox" class="filter-service" value="parking"> Parking</label>
+                            <label><input type="checkbox" class="filter-service" value="gym"> Gym</label>
+                            <label><input type="checkbox" class="filter-service" value="internet"> Internet</label>
+                            <label><input type="checkbox" class="filter-service" value="dinner"> Dinner</label>
+                        </div>
+                    </div>
+
+                    <button id="clear-filters" class="btn-ghost">Clear All Filters</button>
+                </aside>
+
+                <main class="catalog-main">
+                    <div class="search-bar">
+                        <input type="text" id="hotel-search" placeholder="Search hotels by name or address...">
+                    </div>
+
+                    <div class="hotels-grid" id="hotels-grid">
+                        </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <script src="../js/load-sidebar.js"></script>
+    <script type="module" src="../js/hotel-catalog.js"></script>
+</body>
+</html>

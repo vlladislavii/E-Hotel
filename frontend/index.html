@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Hotel Dashboard</title>
+    <link rel="stylesheet" href="src/css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <div id="sidebar-container"></div>
+
+        <div class="dashboard-container">
+            <header class="header">
+                <h2 class="title">Dashboard</h2>
+                <p class="subtitle">Welcome to E-Hotel Resort Cashier Management</p>
+            </header>
+
+            <section class="stats-grid" id="stats-grid"></section>
+
+            <main class="main-content">
+                <div class="card">
+                    <div class="card-header">
+                        <i data-lucide="trending-up" class="icon-blue"></i>
+                        <h3>Recent Activity</h3>
+                    </div>
+                    <div class="card-content" id="recent-activity"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <i data-lucide="clock" class="icon-orange"></i>
+                        <h3>Upcoming Checkouts</h3>
+                    </div>
+                    <div class="card-content" id="upcoming-checkouts"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="card-content buttons-stack">
+                        <button class="btn btn-primary" onclick="window.location.href='/src/html/hotel-catalog.html'"><i data-lucide="hotel"></i> View Hotels</button>
+                        <button class="btn btn-outline" onclick="window.location.href='/src/html/search-availability.html'"><i data-lucide="calendar"></i> Search Rooms</button>
+                        <button class="btn btn-ghost" onclick="window.location.href='/src/html/stay-management.html'"><i data-lucide="log-out"></i> Process Checkout</button>
+                    </div>
+                </div>  
+            </main>
+        </div>
+    </div>
+
+        <script src="src/js/load-sidebar.js"></script>
+        <script type="module" src="./src/js/dashboard.js"></script>
+</body>
+</html>

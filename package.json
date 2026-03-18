@@ -1,26 +1,17 @@
 {
-  "name": "e-hotel",
+  "name": "e-hotel-root",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Root management for E-Hotel Project",
+  "private": true,
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "mysql2": "^3.18.2",
-    "sequelize": "^6.37.7",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "server": "npm run dev --prefix backend",
+    "client": "npm run dev --prefix frontend",
+    "dev": "npm run server"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "lucide-react": "^0.577.0"
   }
 }

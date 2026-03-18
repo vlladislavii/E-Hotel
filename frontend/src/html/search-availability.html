@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Availability - E-Hotel</title>
+    <link rel="stylesheet" href="/src/css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <div id="sidebar-container"></div>
+
+        <div class="dashboard-container">
+            <header class="header">
+                <h2 class="title">Search Availability</h2>
+                <p class="subtitle">Find available rooms across all hotels</p>
+            </header>
+
+            <div class="card mb-8">
+                <div class="search-form-grid">
+                    <div class="form-group">
+                        <label>Select Hotel</label>
+                        <select id="hotel-select" class="form-input">
+                            <option value="all">All Hotels</option>
+                            </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date Range</label>
+                        <div class="date-picker-wrapper">
+                            <input type="date" id="date-from" class="form-input">
+                            <span class="date-separator">-</span>
+                            <input type="date" id="date-to" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Room Type</label>
+                        <select id="room-type-select" class="form-input">
+                            <option value="">Select room type</option>
+                            <option value="Single">Single Room</option>
+                            <option value="Double">Double Room</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="search-btn" class="btn btn-primary">
+                            <i data-lucide="search"></i> Search
+                        </button>
+                        <button id="reset-btn" class="btn btn-ghost" style="display:none">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-header">
+                <h3 id="results-title">All Available Rooms</h3>
+                <p id="results-count" class="text-muted">0 rooms available</p>
+            </div>
+
+            <div id="availability-list" class="space-y-4">
+                </div>
+        </div>
+    </div>
+
+    <script src="/src/js/load-sidebar.js"></script>
+    <script type="module" src="/src/js/search-availability.js"></script>
+</body>
+</html>

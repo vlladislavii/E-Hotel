@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Booking - E-Hotel</title>
+    <link rel="stylesheet" href="/src/css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <div id="sidebar-container"></div>
+        <div class="dashboard-container">
+            <header class="header">
+                <h2 class="title">New Booking</h2>
+                <p id="hotel-name-display" class="subtitle">Create a new reservation</p>
+            </header>
+
+            <div id="selected-room-card" class="card mb-6" style="display: none; background: #eff6ff; border-color: #bfdbfe;">
+                <div class="stat-card-inner">
+                    <div class="room-info">
+                        <h4 id="display-room-type" class="text-blue-700">Room Type</h4>
+                        <p id="display-hotel-name" class="text-sm text-gray-600">Hotel Name</p>
+                        <div id="display-dates" class="text-xs mt-2 font-medium text-blue-600">
+                            <i data-lucide="calendar" style="width:14px"></i> 
+                            <span id="date-range-text">Dates not selected</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500">Price per night</p>
+                        <p id="display-price" class="price-value text-xl">$0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 max-w-4xl mx-auto">
+                <form id="booking-form">
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="flex-center gap-2"><i data-lucide="user" class="icon-blue"></i> Tourist Information</h3>
+                        </div>
+                        <div class="card-content space-y-4">
+                            <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" class="form-input" placeholder="Enter guest full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="personal-id">ID Number</label>
+                                <input type="text" id="personal-id" class="form-input" placeholder="Enter ID number" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="mb-3 block">Additional Services</label>
+                                <div class="checkbox-group space-y-3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="flex-center gap-2"><i data-lucide="credit-card" class="icon-blue"></i> Payment Details</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="form-group">
+                                <label>Credit Card Number *</label>
+                                <input type="text" class="form-input" placeholder="1234 5678 9012 3456" required>
+                            </div>
+                            <div class="grid-2 mt-4">
+                                <div class="form-group"><label>Expiry Date</label><input type="text" class="form-input" placeholder="MM/YY"></div>
+                                <div class="form-group"><label>CVV</label><input type="password" class="form-input" placeholder="123"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="flex-center gap-2"><i data-lucide="ticket" class="icon-blue"></i> Promo Code</h3>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="text" id="coupon-code" class="form-input" placeholder="Enter SAVE5" style="flex: 1;">
+                                <button type="button" id="apply-coupon" class="btn btn-outline">Apply</button>
+                            </div>
+                            <p id="coupon-message" class="text-xs mt-2" style="display: none;"></p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-6 bg-blue-light border-blue">
+                        <div class="card-content">
+                            <h3 class="mb-3">Booking Summary</h3>
+                            <div id="summary-content" class="text-sm space-y-2">
+                                <div class="flex-between"><span>Hotel:</span> <strong id="summary-hotel">—</strong></div>
+                                <div class="flex-between"><span>Room:</span> <strong id="summary-room">—</strong></div>
+                                <div class="flex-between"><span>Duration:</span> <strong id="summary-nights">—</strong></div>
+                                <div class="flex-between"><span>Guest:</span> <strong id="summary-name">—</strong></div>
+                                
+                                <div id="services-summary" class="mt-2 space-y-1"></div>
+                                
+                                <div id="summary-discount-row" class="flex-between text-green-600" style="display: none; padding-top: 8px; border-top: 1px dashed #bee3f8;">
+                                    <span>Discount (SAVE5):</span>
+                                    <strong id="summary-discount-val">-$0</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="total-section mt-4 pt-3" style="border-top: 2px solid #2563eb;">
+                            <div class="flex-between">
+                                <span class="font-bold">Total Amount:</span>
+                                <strong id="total-booking-price" class="text-xl text-blue-600">$0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button type="button" class="btn btn-outline flex-1" onclick="history.back()">Cancel</button>
+                        <button type="submit" class="btn btn-primary flex-1">Confirm Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/src/js/load-sidebar.js"></script>
+    <script type="module" src="/src/js/booking.js"></script>
+</body>
+</html>
