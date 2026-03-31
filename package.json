@@ -6,7 +6,7 @@
   "scripts": {
     "server": "npm run dev --prefix backend",
     "client": "npm run dev --prefix frontend",
-    "dev": "npm run server"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

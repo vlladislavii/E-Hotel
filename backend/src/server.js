@@ -2,9 +2,10 @@
 const express = require('express');
 // Cors for allowing cross-origin requests (React frontend will be on a different port)
 const cors = require('cors');
+// DB models with relations
+const db = require('./models/index');
 // Load environment variables from .env file
 require('dotenv').config();
-
 // Database connection (Object-Relational Mapping with Sequelize)
 const sequelize = require('./config/db');
 // Swagger setup for API documentation, using YAML for easier readability, and path for resolving file paths
@@ -36,6 +37,9 @@ const startServer = async () => {
   try {
     await sequelize.authenticate();
     console.log(`MySQL connected on port ${process.env.DB_PORT || 3305}`);
+
+    await db.sequelize.sync({ alter: true }); 
+    console.log('Database synced: All tables from Domain Model created/updated.');
 
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`Backend server is running on port ${PORT}`));
