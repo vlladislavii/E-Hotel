@@ -77,23 +77,35 @@
 				<button onclick="closeDetailsModal()" class="btn btn-ghost" style="padding: 5px;">✕</button>
 			</div>
 			<div id="details-content"></div>
+			
 			<div id="cancel-section" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: none;">
 				<p id="cancel-warning" style="font-size: 0.75rem; color: #ea580c; margin-bottom: 10px;"></p>
-				<button id="cancel-booking-btn" class="btn btn-outline" style="width: 100%; border-color: #ef4444; color: #ef4444;">Cancel Reservation</button>
+				
+				<div id="cancel-btn-container" style="display: flex; flex-direction: column; gap: 10px;">
+					<button id="cancel-booking-btn" class="btn btn-outline" style="width: 100%; border-color: #ef4444; color: #ef4444; justify-content: center;">
+						Cancel Reservation
+					</button>
+					
+					<button id="invalid-booking-btn" class="btn btn-outline" style="width: 100%; border-color: #9ca3af; color: #4b5563; justify-content: center;">
+						Mark as Invalid
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="extend-modal" class="modal-overlay">
-		<div class="card" style="width: 400px;">
-			<h3>Extend Stay</h3>
+	<div id="extend-modal" class="modal-overlay" style="display: none;">
+		<div class="card" style="width: 400px; padding: 20px;">
+			<h3 style="margin-bottom: 20px;">Extand Stay</h3>
 			<div class="form-group mb-6">
-				<label>New Check-Out Date</label>
-				<input type="date" id="new-checkout-date" class="form-input">
+				<label style="display: block; margin-bottom: 8px;">New Check out date</label>
+				<input type="date" id="new-checkout-date" class="form-input" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ddd;">
+				
+				<div id="extend-price-info" style="margin-top: 10px;"></div>
 			</div>
-			<div style="display: flex; gap: 10px;">
+			<div style="display: flex; gap: 10px; margin-top: 20px;">
 				<button onclick="closeExtendModal()" class="btn btn-outline" style="flex: 1;">Cancel</button>
-				<button id="confirm-extend-btn" class="btn btn-primary" style="flex: 1;">Confirm</button>
+				<button id="confirm-extend-btn" class="btn btn-primary" style="flex: 1;">Approve</button>
 			</div>
 		</div>
 	</div>

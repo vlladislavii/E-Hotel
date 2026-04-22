@@ -25,12 +25,25 @@ app.use(express.json());
 // Swagger route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Test route
-app.get('/', (req, res) => res.send('E-Hotel backend is running!'));
-
 // App routes
+// 1. Route for authefication of Cashiers
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+// 2. Rout for hotel data (and its services)
 const hotelRoutes = require('./routes/hotelRoutes');
 app.use('/api/hotels', hotelRoutes);
+// 3. Rout for room data
+const roomRoutes = require('./routes/roomRoutes');
+app.use('/api/rooms', roomRoutes);
+// 4. Rout for booking data
+const bookingRoutes = require('./routes/bookingRoutes');
+app.use('/api/bookings', bookingRoutes);
+// 5. Rout for coupon data
+const couponRoutes = require('./routes/couponRoutes');
+app.use('/api/coupons', couponRoutes);
+// 6. Rout for dasboard stats
+const dashboardRoutes = require('./routes/dashboardRoutes');
+app.use('/api/dashboard', dashboardRoutes);
 
 // Start server after DB connection
 const startServer = async () => {
@@ -38,7 +51,7 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log(`MySQL connected on port ${process.env.DB_PORT || 3305}`);
 
-    await db.sequelize.sync({ alter: true }); 
+    await db.sequelize.sync(); 
     console.log('Database synced: All tables from Domain Model created/updated.');
 
     const PORT = process.env.PORT || 5000;

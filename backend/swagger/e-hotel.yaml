@@ -2,16 +2,51 @@ openapi: 3.0.0
 info:
   title: E-Hotel API
   version: 1.0.0
+  description: API for managing resort hotels, room bookings, and staff authentication.
+
 paths:
-  /:
-    get:
-      summary: Test route
+  /api/auth/login:
+    post:
+      summary: Authenticate cashier and return JWT token
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
       responses:
         '200':
-          description: Server is running
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid username or password
+        '500':
+          description: Internal server error
+
+  /api/auth/register:
+    post:
+      summary: Register a new cashier
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: User already exists
+
   /api/hotels:
     get:
-      summary: List hotels
+      summary: List all hotels with their services
+      tags: [Hotels]
       responses:
         '200':
           description: OK
@@ -20,11 +55,384 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    stars:
-                      type: integer
+                  $ref: '#/components/schemas/Hotel'
+
+  /api/hotels/{id}/services:
+    get:
+      summary: Get all services provided by a specific hotel
+      tags: [Hotels]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+        '404':
+          description: Hotel not found
+
+  /api/rooms/search:
+    get:
+      summary: Search available rooms
+      tags: [Rooms]
+      parameters:
+        - name: from
+          in: query
+          schema: { type: string, format: date }
+        - name: to
+          in: query
+          schema: { type: string, format: date }
+        - name: hotelId
+          in: query
+          schema: { type: integer }
+        - name: type
+          in: query
+          schema: { type: string, enum: [single, double] }
+      responses:
+        '200':
+          description: List of available rooms
+
+  /api/rooms/{id}:
+    get:
+      summary: Get room details
+      tags: [Rooms]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Room details fetched successfully
+        '404':
+          description: Room not found
+
+  /api/coupons/validate:
+    get:
+      summary: Validate promo code
+      tags: [Coupons]
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Coupon is valid
+        '404':
+          description: Invalid or expired coupon
+
+  /api/bookings:
+    get:
+      summary: List all bookings
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+        '401':
+          description: Unauthorized
+    post:
+      summary: Create a new booking
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookingRequest'
+      responses:
+        '201':
+          description: Booking created
+        '401':
+          description: Unauthorized
+
+  /api/bookings/{number}/check-in:
+    patch:
+      summary: Update booking status to checked-in
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Status updated
+        '401':
+          description: Unauthorized
+
+  /api/bookings/{number}/check-out:
+    patch:
+      summary: Update booking status to completed
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Checked out successfully
+        '401':
+          description: Unauthorized
+
+  /api/bookings/{number}/extend:
+    patch:
+      summary: Extend stay
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newCheckOutDate: { type: string, format: date }
+      responses:
+        '200':
+          description: Stay extended
+        '401':
+          description: Unauthorized
+
+  /api/bookings/{number}/invalid:
+    patch:
+      summary: Mark booking as invalid
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Booking marked as invalid
+        '401':
+          description: Unauthorized
+
+  /api/bookings/{number}/cancel:
+    patch:
+      summary: Cancel a confirmed booking
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Booking canceled
+        '401':
+          description: Unauthorized
+  /api/dashboard/stats:
+    get:
+      summary: Get real-time statistics for the dashboard
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: Dashboard data fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '401':
+          description: Unauthorized
+  /api/auth/cashiers/{cnp}:
+    delete:
+      summary: Delete a cashier account
+      tags: [Authentication]
+      parameters:
+        - name: cnp
+          in: path
+          required: true
+          description: The CNP of the cashier to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cashier deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, example: "Касира успішно видалено." }
+        '400':
+          description: Cannot delete own account
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden (Admin only)
+        '404':
+          description: Cashier not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username: { type: string, example: "vlad" }
+        password: { type: string, format: password, example: "password123" }
+
+    RegisterRequest:
+      type: object
+      required: [CNP, name, username, password]
+      properties:
+        CNP: { type: string, example: "1234567890123" }
+        name: { type: string, example: "Vlad Kiselar" }
+        username: { type: string, example: "vlad" }
+        password: { type: string, example: "password123" }
+
+    LoginResponse:
+      type: object
+      properties:
+        message: { type: string }
+        token: { type: string }
+        cashier:
+          type: object
+          properties:
+            name: { type: string }
+            username: { type: string }
+            CNP: { type: string }
+
+    CreateBookingRequest:
+      type: object
+      required: [roomId, checkInDate, checkOutDate, tourist, payment]
+      properties:
+        roomId: { type: integer }
+        checkInDate: { type: string, format: date }
+        checkOutDate: { type: string, format: date }
+        couponCode: { type: string }
+        services:
+          type: array
+          items: { type: integer }
+        tourist:
+          type: object
+          properties:
+            CNP: { type: string }
+            name: { type: string }
+        payment:
+          type: object
+          properties:
+            cardNumber: { type: string }
+            expiryDate: { type: string }
+            cvv: { type: string }
+
+    Hotel:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        stars: { type: integer }
+        address: { type: string }
+        Services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+
+    Service:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        price: { type: number, format: float }
+
+    Booking:
+      type: object
+      properties:
+        number: { type: string }
+        checkInDate: { type: string, format: date }
+        checkOutDate: { type: string, format: date }
+        status: { type: string }
+        totalCost: { type: number, format: float }
+        Room:
+          type: object
+          properties:
+            number: { type: string }
+            Hotel:
+              type: object
+              properties:
+                name: { type: string }
+        CreditCard:
+          type: object
+          properties:
+            Tourist:
+              type: object
+              properties:
+                name: { type: string }
+        DashboardResponse:
+          type: object
+          properties:
+            stats:
+              type: array
+              items:
+                type: object
+                properties:
+                  title: { type: string }
+                  value: { type: string }
+                  change: { type: string }
+                  icon: { type: string }
+                  color: { type: string }
+        activity:
+          type: array
+          items:
+            type: object
+            properties:
+              guest: { type: string }
+              type: { type: string }
+              hotel: { type: string }
+              time: { type: string }
+        checkouts:
+          type: array
+          items:
+            type: object
+            properties:
+              guest: { type: string }
+              room: { type: string }
+              hotel: { type: string }
+              time: { type: string }

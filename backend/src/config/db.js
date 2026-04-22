@@ -10,10 +10,15 @@ const sequelize = new Sequelize(
     port: process.env.DB_PORT || 3305,
     dialect: 'mysql',
     logging: false,
+    timezone: '+03:00',
+    dialectOptions: {
+      dateStrings: true,
+      typeCast: true
+    },
     define: {
-    freezeTableName: true
+      freezeTableName: true
+    }
   }
-  },
 );
 
 module.exports = sequelize;

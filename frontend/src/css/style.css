@@ -620,3 +620,213 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .gap-1 { gap: 0.5rem; }
 
 .status-cancelled { background: #fee2e2; color: #991b1b; }
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+    background-color: var(--bg-gray);
+}
+
+#login-form {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 400px;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+#login-form h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 1.25rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+#login-form button[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+#login-form button[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+#login-form button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+#error-message {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    text-align: center;
+    background-color: #fef2f2;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #fee2e2;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.logout-item {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ef4444 !important; 
+    text-align: left;
+}
+
+.logout-item:hover {
+    background-color: #fef2f2 !important;
+}
+
+.status-invalid {
+    background-color: #fee2e2;
+    color: #991b1b;     
+    padding: 4px 21px;
+    border-radius: 9999px;    
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+.status-canceled {
+    background-color: #fee2e2;
+    color: #991b1b;     
+    padding: 4px 15px;
+    border-radius: 9999px;    
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+#extend-price-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem; 
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.price-details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.extra-charge-value {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.price-divider {
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 0.75rem 0;
+}
+
+.total-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.total-price-value {
+    color: #2563eb;
+}
+
+.cancel-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#cancel-booking-btn, 
+#invalid-booking-btn {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important; 
+    text-align: center;
+    width: 100%;
+    height: 44px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#cancel-booking-btn:hover {
+    background-color: #fef2f2;
+}
+
+.cancel-actions-container .btn {
+    flex: 1;
+    padding: 10px 16px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+#invalid-booking-btn:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+    color: #1f2937;
+}

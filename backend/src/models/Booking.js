@@ -3,7 +3,6 @@ const sequelize = require('../config/db');
 
 module.exports = sequelize.define('Booking', {
   number: { type: DataTypes.STRING, primaryKey: true },
-  creationTimeStamp: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   checkInDate: { type: DataTypes.DATE, allowNull: false },
   checkOutDate: { type: DataTypes.DATE, allowNull: false },
   totalCost: { type: DataTypes.DECIMAL(10, 2) },

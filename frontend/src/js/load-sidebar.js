@@ -16,6 +16,9 @@ async function initSidebar() {
         
         container.querySelectorAll('.nav-item').forEach(link => {
             const originalHref = link.getAttribute('href');
+            
+            if (!originalHref) return;
+
             const cleanHref = originalHref.replace(/^(\.\/|\/)/, '');
             const fullHref = `${baseUrl}${cleanHref}`;
             link.href = fullHref;
@@ -47,6 +50,16 @@ async function initSidebar() {
                 }
             };
         }
+
+        const logoutBtn = container.querySelector('#logout-btn');
+        if (logoutBtn) {
+            logoutBtn.onclick = function() {
+                sessionStorage.removeItem('hotel_token');
+                sessionStorage.removeItem('cashier_info');
+                window.location.href = `${baseUrl}src/html/login.html`;
+            };
+        }
+
     } catch (err) {
         console.error("Sidebar Error:", err);
     }

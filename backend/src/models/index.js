@@ -23,7 +23,7 @@ Hotel.hasMany(Room, { foreignKey: 'hotelId' });
 Room.belongsTo(Hotel, { foreignKey: 'hotelId' });
 
 // One-to-Many (Hotel->Service)
-Hotel.hasMany(Service, { foreignKey: 'hotelId' });
+Hotel.hasMany(Service, { foreignKey: 'hotelId', as: 'hotelServices'});
 Service.belongsTo(Hotel, { foreignKey: 'hotelId' });
 
 // One-to-Many (Tourist->CreditCard)
@@ -62,6 +62,10 @@ BookingStatusLog.belongsTo(Booking, { foreignKey: 'bookingNumber' });
 // One-to-Many (Booking->Cashier)
 Cashier.hasMany(BookingStatusLog, { foreignKey: 'changedByCashierCNP' });
 BookingStatusLog.belongsTo(Cashier, { foreignKey: 'changedByCashierCNP' });
+BookingStatusLog.belongsTo(Cashier, { 
+    foreignKey: 'changedByCashierCNP',
+    onDelete: 'SET NULL'
+});
 
 // One-to-One (Booking<->Cashier)
 Booking.hasOne(Bill, { foreignKey: 'bookingNumber' });
