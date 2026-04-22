@@ -8,6 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        dashboard: resolve(__dirname, 'src/html/dashboard.html'),
         catalog: resolve(__dirname, 'src/html/hotel-catalog.html'),
         search: resolve(__dirname, 'src/html/search-availability.html'),
         management: resolve(__dirname, 'src/html/stay-management.html'),

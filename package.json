@@ -4,9 +4,11 @@
   "description": "Root management for E-Hotel Project",
   "private": true,
   "scripts": {
-    "server": "npm run dev --prefix backend",
-    "client": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+  "server": "npm run dev --prefix backend",
+  "client": "npm run dev --prefix frontend",
+  "dev": "concurrently \"npm run server\" \"npm run client\"",
+  "build-client": "npm run build --prefix frontend",
+  "preview-client": "npm run preview --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
