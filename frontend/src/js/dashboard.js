@@ -3,6 +3,11 @@ if (!sessionStorage.getItem('hotel_token')) {
     window.location.href = baseUrl;
 }
 
+window.navigateTo = (path) => {
+    const baseUrl = import.meta.env.BASE_URL;
+    window.location.href = `${baseUrl}${path}`;
+};
+
 async function loadDashboardData() {
     try {
         const response = await fetch('http://localhost:5000/api/dashboard/stats');
