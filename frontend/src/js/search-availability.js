@@ -2,7 +2,7 @@ let currentHotelsData = [];
 
 if (!sessionStorage.getItem('hotel_token')) {
     const baseUrl = import.meta.env.BASE_URL;
-    window.location.href = `${baseUrl}src/html/login.html`;
+    window.location.href = baseUrl;
 }
 
 async function loadHotelsToSelect() {

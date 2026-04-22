@@ -25,7 +25,7 @@ async function fetchBookings() {
         });
 
         if (response.status === 401 || response.status === 403) {
-            window.location.href = 'login.html';
+            window.location.href = baseUrl;
             return;
         }
 

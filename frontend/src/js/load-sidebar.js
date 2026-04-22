@@ -56,7 +56,7 @@ async function initSidebar() {
             logoutBtn.onclick = function() {
                 sessionStorage.removeItem('hotel_token');
                 sessionStorage.removeItem('cashier_info');
-                window.location.href = `${baseUrl}src/html/login.html`;
+                window.location.href = baseUrl;
             };
         }
 
