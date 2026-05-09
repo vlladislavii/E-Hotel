@@ -1,0 +1,30 @@
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Variants */
+.blue {
+  background-color: var(--blue-light);
+  border: 1px solid var(--blue-border);
+}
+
+.stat {
+  padding: 1.25rem;
+}

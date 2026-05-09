@@ -1,0 +1,214 @@
+.searchBar {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: var(--blue);
+}
+
+.tableCard {
+  margin-bottom: 1.5rem;
+}
+
+.tableTitle {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: var(--gray-light);
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.emptyRow {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem !important;
+}
+
+.codeLink {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--blue);
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+
+.codeLink:hover {
+  color: var(--blue-dark);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Details Modal */
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.detailLabel {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.detailValue {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.billInfo {
+  margin-top: 15px;
+  padding: 10px;
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  border-radius: 8px;
+}
+
+.billTitle {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #065f46;
+  font-weight: bold;
+}
+
+.billInfo p {
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+}
+
+.cancelSection {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.cancelWarning {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+}
+
+.cancelActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cancelActions button {
+  width: 100%;
+}
+
+/* Extend Modal */
+.extendField {
+  margin-bottom: 1rem;
+}
+
+.extendField label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.dateInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.dateInput:focus {
+  border-color: var(--blue);
+}
+
+.extendPreview {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--gray-light);
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm);
+}
+
+.previewRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.previewDivider {
+  height: 1px;
+  background: var(--gray-border);
+  margin: 0.75rem 0;
+}
+
+.extendError {
+  margin-top: 1rem;
+  color: var(--red);
+  font-size: 0.85rem;
+}
+
+.extendActions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.extendActions button {
+  flex: 1;
+}

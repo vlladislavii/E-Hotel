@@ -1,0 +1,38 @@
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.confirmed {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.checkedin {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.completed {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.canceled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.invalid {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.default {
+  background: #f3f4f6;
+  color: #6b7280;
+}

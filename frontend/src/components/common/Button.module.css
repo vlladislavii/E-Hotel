@@ -1,0 +1,87 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.primary {
+  background: var(--blue);
+  color: white;
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--blue-dark);
+}
+
+.outline {
+  background: white;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+}
+
+.outline:hover:not(:disabled) {
+  background: var(--blue-light);
+}
+
+.ghost {
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+.ghost:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.danger {
+  background: white;
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--red-light);
+}
+
+.success {
+  background: white;
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.success:hover:not(:disabled) {
+  background: var(--green-light);
+}
+
+/* Sizes */
+.small {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.medium {
+  padding: 0.75rem 1rem;
+}
+
+.large {
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
