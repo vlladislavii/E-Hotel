@@ -44,6 +44,9 @@ app.use('/api/coupons', couponRoutes);
 // 6. Rout for dasboard stats
 const dashboardRoutes = require('./routes/dashboardRoutes');
 app.use('/api/dashboard', dashboardRoutes);
+// 7. Rout for performance reports
+const reportRoutes = require('./routes/reportRoutes');
+app.use('/api/reports', reportRoutes);
 
 // Start server after DB connection
 const startServer = async () => {

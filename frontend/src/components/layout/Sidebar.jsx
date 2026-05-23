@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Hotel, LayoutDashboard, Building2, Search, CalendarCheck, LogOut, Menu, X } from 'lucide-react'
+import { Hotel, LayoutDashboard, Building2, Search, CalendarCheck, FileBarChart, LogOut, Menu, X } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import styles from './Sidebar.module.css'
 
@@ -9,6 +9,7 @@ const navItems = [
   { path: '/hotels', label: 'Hotel Catalog', icon: Building2 },
   { path: '/search', label: 'Search Availability', icon: Search },
   { path: '/stays', label: 'Stay Management', icon: CalendarCheck },
+  { path: '/reports', label: 'Performance Reports', icon: FileBarChart },
 ]
 
 function Sidebar() {

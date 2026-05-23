@@ -7,6 +7,7 @@ import HotelCatalogPage from './pages/HotelCatalogPage'
 import SearchAvailabilityPage from './pages/SearchAvailabilityPage'
 import BookingPage from './pages/BookingPage'
 import StayManagementPage from './pages/StayManagementPage'
+import PerformanceReportPage from './pages/PerformanceReportPage'
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth()
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/search" element={<SearchAvailabilityPage />} />
                 <Route path="/booking" element={<BookingPage />} />
                 <Route path="/stays" element={<StayManagementPage />} />
+                <Route path="/reports" element={<PerformanceReportPage />} />
                 <Route path="*" element={<Navigate to="/dashboard" replace />} />
               </Routes>
             </Layout>

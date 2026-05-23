@@ -305,6 +305,68 @@ paths:
         '404':
           description: Cashier not found
 
+  /api/reports:
+    get:
+      summary: List all archived monthly performance reports
+      tags: [Reports]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceReport'
+
+  /api/reports/generate:
+    post:
+      summary: Aggregate a calendar month and archive it as a performance report
+      tags: [Reports]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [yearMonth]
+              properties:
+                yearMonth:
+                  type: string
+                  example: "2026-04"
+                  description: Target month in YYYY-MM format
+      responses:
+        '201':
+          description: Report generated (or refreshed) and archived
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceReport'
+        '400':
+          description: Invalid or missing yearMonth
+
+  /api/reports/{id}/download:
+    get:
+      summary: Download a performance report as a PDF file
+      tags: [Reports]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The report id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: PDF file
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Report not found
+
 components:
   securitySchemes:
     bearerAuth:
@@ -436,3 +498,15 @@ components:
               room: { type: string }
               hotel: { type: string }
               time: { type: string }
+
+    PerformanceReport:
+      type: object
+      properties:
+        id: { type: integer }
+        yearMonth: { type: string, example: "2026-04" }
+        resortId: { type: integer }
+        totalRoomEarnings: { type: number, format: float }
+        totalCancelations: { type: integer }
+        popularRoomType: { type: string, enum: [single, double] }
+        timeStamp: { type: string, format: date-time }
+        pdfLink: { type: string, example: "/api/reports/1/download" }

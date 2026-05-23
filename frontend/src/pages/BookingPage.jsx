@@ -21,7 +21,6 @@ function BookingPage() {
   const dateFrom = searchParams.get('from') || ''
   const dateTo = searchParams.get('to') || ''
 
-  // Form state
   const [guestName, setGuestName] = useState('')
   const [personalId, setPersonalId] = useState('')
   const [cardNumber, setCardNumber] = useState('')

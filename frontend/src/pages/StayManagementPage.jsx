@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Search } from 'lucide-react'
+import { Search, CreditCard, Banknote, CheckCircle, Receipt } from 'lucide-react'
 import { bookingsApi } from '../api/bookings'
 import { formatDate, isGracePeriodExpired, formatCurrency } from '../utils/formatters'
 import Header from '../components/layout/Header'
@@ -17,6 +17,9 @@ function StayManagementPage() {
   const [selectedBooking, setSelectedBooking] = useState(null)
   const [detailsModalOpen, setDetailsModalOpen] = useState(false)
   const [extendModalOpen, setExtendModalOpen] = useState(false)
+  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState('Card')
+  const [issuedBill, setIssuedBill] = useState(null)
   const [newCheckoutDate, setNewCheckoutDate] = useState('')
 
   const { data: bookings = [], isLoading } = useQuery({
@@ -34,11 +37,14 @@ function StayManagementPage() {
 
   const checkOutMutation = useMutation({
     mutationFn: ({ number, paymentMethod }) => bookingsApi.checkOut(number, paymentMethod),
-    onSuccess: (data) => {
-      alert(`Success!\nBill #${data.billNumber} issued.\nTotal Paid: $${data.totalPaid}`)
+    onSuccess: (data, variables) => {
+      setIssuedBill({
+        billNumber: data.billNumber,
+        totalPaid: data.totalPaid,
+        paymentMethod: variables.paymentMethod
+      })
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
-    },
-    onError: (err) => alert(err.message)
+    }
   })
 
   const extendMutation = useMutation({
@@ -92,11 +98,19 @@ function StayManagementPage() {
     checkInMutation.mutate(number)
   }
 
-  const handleCheckOut = (number) => {
-    const useCard = window.confirm('Process Payment\n\nClick OK for CARD payment\nClick CANCEL for CASH payment')
+  const handleOpenCheckout = (booking) => {
+    setSelectedBooking(booking)
+    setPaymentMethod('Card')
+    setIssuedBill(null)
+    checkOutMutation.reset()
+    setCheckoutModalOpen(true)
+  }
+
+  const handleConfirmCheckout = () => {
+    if (!selectedBooking || !paymentMethod) return
     checkOutMutation.mutate({
-      number,
-      paymentMethod: useCard ? 'Card' : 'Cash'
+      number: selectedBooking.number,
+      paymentMethod
     })
   }
 
@@ -133,7 +147,6 @@ function StayManagementPage() {
     }
   }
 
-  // Calculate extend preview
   const extendPreview = useMemo(() => {
     if (!selectedBooking || !newCheckoutDate) return null
 
@@ -233,7 +246,7 @@ function StayManagementPage() {
                           <Button
                             size="small"
                             variant="primary"
-                            onClick={() => handleCheckOut(booking.number)}
+                            onClick={() => handleOpenCheckout(booking)}
                           >
                             Checkout
                           </Button>
@@ -423,6 +436,120 @@ function StayManagementPage() {
                 {extendMutation.isPending ? 'Processing...' : 'Approve'}
               </Button>
             </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Checkout / Payment Modal */}
+      <Modal
+        isOpen={checkoutModalOpen}
+        onClose={() => setCheckoutModalOpen(false)}
+        title={issuedBill ? 'Payment Complete' : `Checkout: ${selectedBooking?.number || ''}`}
+      >
+        {selectedBooking && !issuedBill && (
+          <div>
+            <div className={styles.checkoutSummary}>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Guest:</span>
+                <span className={styles.detailValue}>
+                  {selectedBooking.CreditCard?.Tourist?.name || 'N/A'}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Room:</span>
+                <span className={styles.detailValue}>
+                  #{selectedBooking.Room?.number} · {selectedBooking.Room?.Hotel?.name}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Stay Period:</span>
+                <span className={styles.detailValue}>
+                  {formatDate(selectedBooking.checkInDate)} - {formatDate(selectedBooking.checkOutDate)}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Amount Due:</span>
+                <span className={styles.amountDue}>
+                  {formatCurrency(selectedBooking.totalCost)}
+                </span>
+              </div>
+            </div>
+
+            <p className={styles.paymentLabel}>Select Payment Method</p>
+            <div className={styles.paymentOptions}>
+              <button
+                type="button"
+                className={`${styles.paymentOption} ${paymentMethod === 'Card' ? styles.paymentOptionSelected : ''}`}
+                onClick={() => setPaymentMethod('Card')}
+              >
+                <CreditCard size={28} />
+                <span>Card</span>
+              </button>
+              <button
+                type="button"
+                className={`${styles.paymentOption} ${paymentMethod === 'Cash' ? styles.paymentOptionSelected : ''}`}
+                onClick={() => setPaymentMethod('Cash')}
+              >
+                <Banknote size={28} />
+                <span>Cash</span>
+              </button>
+            </div>
+
+            {checkOutMutation.isError && (
+              <p className={styles.extendError}>
+                {checkOutMutation.error?.message || 'Checkout failed'}
+              </p>
+            )}
+
+            <div className={styles.extendActions}>
+              <Button variant="ghost" onClick={() => setCheckoutModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleConfirmCheckout}
+                disabled={!paymentMethod || checkOutMutation.isPending}
+              >
+                {checkOutMutation.isPending
+                  ? 'Processing...'
+                  : `Pay ${formatCurrency(selectedBooking.totalCost)}`}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {issuedBill && (
+          <div className={styles.successBox}>
+            <div className={styles.successIcon}>
+              <CheckCircle size={48} />
+            </div>
+            <h3 className={styles.successTitle}>Payment Successful</h3>
+            <p className={styles.successSub}>Paid via {issuedBill.paymentMethod}</p>
+
+            <div className={styles.billCard}>
+              <div className={styles.billCardTitle}>
+                <Receipt size={16} />
+                <span>Invoice Issued</span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Bill Number:</span>
+                <span className={styles.detailValue}>#{issuedBill.billNumber}</span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Total Paid:</span>
+                <span className={styles.detailValue} style={{ color: 'var(--green)', fontWeight: 'bold' }}>
+                  {formatCurrency(issuedBill.totalPaid)}
+                </span>
+              </div>
+            </div>
+
+            <Button
+              variant="primary"
+              onClick={() => setCheckoutModalOpen(false)}
+              className={styles.fullWidthBtn}
+            >
+              Done
+            </Button>
           </div>
         )}
       </Modal>

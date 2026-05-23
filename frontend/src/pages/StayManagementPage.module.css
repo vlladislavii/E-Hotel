@@ -212,3 +212,104 @@
 .extendActions button {
   flex: 1;
 }
+
+/* Checkout / Payment Modal */
+.checkoutSummary {
+  margin-bottom: 1.25rem;
+}
+
+.amountDue {
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: var(--blue);
+}
+
+.paymentLabel {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.paymentOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.paymentOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.paymentOption:hover {
+  border-color: var(--blue-border);
+  color: var(--text-main);
+}
+
+.paymentOptionSelected {
+  border-color: var(--blue);
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+/* Payment success view */
+.successBox {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.successIcon {
+  display: flex;
+  justify-content: center;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+
+.successTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.successSub {
+  margin: 0 0 1.25rem 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.billCard {
+  text-align: left;
+  background: var(--gray-light);
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.billCardTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-bottom: 0.5rem;
+}
+
+.fullWidthBtn {
+  width: 100%;
+}

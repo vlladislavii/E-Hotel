@@ -40,7 +40,6 @@ function SearchAvailabilityPage() {
     enabled: true
   })
 
-  // Handle URL parameter for hotel pre-selection
   useEffect(() => {
     const hotelName = searchParams.get('hotel')
     if (hotelName && hotels.length > 0) {

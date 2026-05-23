@@ -30,6 +30,16 @@ export function formatDateTime(dateString) {
   })
 }
 
+export function formatMonth(yearMonth) {
+  if (!yearMonth) return ''
+  const [year, month] = yearMonth.split('-').map(Number)
+  const date = new Date(year, (month || 1) - 1, 1)
+  return date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'long'
+  })
+}
+
 export function calculateNights(checkIn, checkOut) {
   const start = new Date(checkIn)
   const end = new Date(checkOut)
