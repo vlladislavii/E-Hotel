@@ -6,6 +6,7 @@ import { roomsApi } from '../api/rooms'
 import { bookingsApi } from '../api/bookings'
 import { couponsApi } from '../api/coupons'
 import { calculateNights, formatCurrency } from '../utils/formatters'
+import { useToast } from '../hooks/useToast'
 import Header from '../components/layout/Header'
 import Card from '../components/common/Card'
 import Input from '../components/common/Input'
@@ -16,6 +17,7 @@ import styles from './BookingPage.module.css'
 function BookingPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const { showToast } = useToast()
 
   const roomId = searchParams.get('roomId')
   const dateFrom = searchParams.get('from') || ''
@@ -40,20 +42,20 @@ function BookingPage() {
   const createBooking = useMutation({
     mutationFn: bookingsApi.create,
     onSuccess: (data) => {
-      alert(`Success! Booking ${data.bookingNumber} confirmed.`)
+      showToast(`Booking ${data.bookingNumber} confirmed!`, 'success')
       navigate('/stays')
     },
     onError: (error) => {
-      alert(`Error: ${error.message}`)
+      showToast(error.message || 'Booking failed', 'error')
     }
   })
 
   useEffect(() => {
     if (!roomId) {
-      alert('Missing Room ID. Returning to catalog...')
+      showToast('Missing Room ID. Returning to catalog…', 'error')
       navigate('/hotels')
     }
-  }, [roomId, navigate])
+  }, [roomId, navigate, showToast])
 
   const nights = useMemo(() => {
     if (dateFrom && dateTo) {

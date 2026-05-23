@@ -1,6 +1,7 @@
 .sidebar {
   width: 280px;
-  background-color: var(--white);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -24,32 +25,38 @@
 }
 
 .brandIcon {
-  background-color: var(--blue);
+  background: var(--gradient-blue);
   color: white;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 9px;
+  border-radius: var(--radius-sm);
   display: flex;
+  box-shadow: var(--shadow-blue);
 }
 
 .brandName {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--blue);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   margin: 0;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .brandTagline {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 500;
   color: var(--text-muted);
   margin: 0;
 }
 
 .menuToggle {
   display: none;
-  background: #f3f4f6;
+  background: var(--gray-light);
   border: 1px solid var(--border);
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   color: var(--blue);
   line-height: 0;
@@ -64,33 +71,36 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
   flex-grow: 1;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  color: #4b5563;
-  font-weight: 500;
-  border-radius: 8px;
-  transition: 0.2s;
+  gap: 0.85rem;
+  padding: 0.8rem 1rem;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+  position: relative;
 }
 
 .navItem:hover {
-  background-color: #f3f4f6;
-  color: #1f2937;
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
 }
 
 .navItemActive {
-  background-color: var(--blue);
+  background: var(--gradient-blue);
   color: white;
+  box-shadow: var(--shadow-blue);
 }
 
 .navItemActive:hover {
-  background-color: var(--blue-dark);
+  background: var(--gradient-blue);
   color: white;
 }
 
@@ -100,20 +110,67 @@
   margin-top: auto;
 }
 
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.7rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--blue-light);
+  border: 1px solid var(--blue-border);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--gradient-blue);
+  color: white;
+  box-shadow: var(--shadow-blue);
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profileName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profileRole {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .logoutBtn {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: 0.85rem;
+  padding: 0.8rem 1rem;
   width: 100%;
   background: none;
   border: none;
   cursor: pointer;
   color: var(--red);
-  font-weight: 500;
-  font-size: 1rem;
-  border-radius: 8px;
-  transition: 0.2s;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
 }
 
 .logoutBtn:hover {

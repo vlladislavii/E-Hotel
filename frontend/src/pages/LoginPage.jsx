@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Hotel } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import styles from './LoginPage.module.css'
 
@@ -40,7 +41,13 @@ function LoginPage() {
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.title}>E-HOTEL Staff Login</h2>
+        <div className={styles.brand}>
+          <div className={styles.brandIcon}>
+            <Hotel size={28} />
+          </div>
+          <h1 className={styles.brandName}>E-Hotel</h1>
+          <p className={styles.brandTagline}>Resort Cashier Management</p>
+        </div>
 
         <div className={styles.inputGroup}>
           <label htmlFor="username">Username</label>

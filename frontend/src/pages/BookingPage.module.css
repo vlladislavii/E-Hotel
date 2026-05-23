@@ -63,9 +63,10 @@
 }
 
 .sectionTitle {
-  margin: 0 0 1rem 0;
-  font-size: 1rem;
-  font-weight: 600;
+  margin: 0 0 1.25rem 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .formFields {
@@ -82,23 +83,40 @@
 
 .servicesTitle {
   margin: 1.5rem 0 0.75rem 0;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   color: var(--text-muted);
 }
 
 .servicesList {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .serviceItem {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   cursor: pointer;
   font-size: 0.9rem;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.serviceItem:hover {
+  border-color: var(--blue-border);
+  background: var(--blue-light);
+}
+
+.serviceItem:has(input:checked) {
+  border-color: var(--blue);
+  background: var(--blue-light);
+  font-weight: 600;
 }
 
 .serviceItem input {

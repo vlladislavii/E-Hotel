@@ -4,26 +4,90 @@
   align-items: center;
   min-height: 100vh;
   padding: 1.5rem;
-  background-color: var(--bg-gray);
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-brand);
+}
+
+/* Vibrant ambient glows over the gradient backdrop */
+.container::before,
+.container::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.container::before {
+  width: 480px;
+  height: 480px;
+  top: -120px;
+  left: -120px;
+  background: #60a5fa;
+}
+
+.container::after {
+  width: 420px;
+  height: 420px;
+  bottom: -140px;
+  right: -100px;
+  background: var(--orange);
 }
 
 .form {
-  background: var(--white);
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
   padding: 2.5rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.45);
   width: 100%;
-  max-width: 400px;
+  max-width: 410px;
   animation: fadeInUp 0.5s ease-out;
 }
 
-.title {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--blue);
+/* Brand header */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  margin-bottom: 2rem;
+}
+
+.brandIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius);
+  background: var(--gradient-blue);
+  color: white;
+  box-shadow: var(--shadow-blue);
+  margin-bottom: 1rem;
+}
+
+.brandName {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brandTagline {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
 .inputGroup {
@@ -32,50 +96,54 @@
 
 .inputGroup label {
   display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 
 .inputGroup input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
 }
 
 .inputGroup input:focus {
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .inputGroup input:disabled {
-  background-color: #f9fafb;
+  background-color: var(--gray-light);
 }
 
 .submitBtn {
   width: 100%;
-  padding: 0.8rem;
-  background-color: var(--blue);
+  padding: 0.9rem;
+  margin-top: 0.5rem;
+  background: var(--gradient-blue);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: var(--shadow-blue);
+  transition: transform 0.1s var(--ease), box-shadow var(--transition);
 }
 
 .submitBtn:hover:not(:disabled) {
-  background-color: var(--blue-dark);
+  box-shadow: 0 14px 28px -8px rgba(37, 99, 235, 0.6);
+  transform: translateY(-1px);
 }
 
 .submitBtn:active:not(:disabled) {
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.99);
 }
 
 .submitBtn:disabled {
@@ -88,9 +156,9 @@
   font-size: 0.85rem;
   text-align: center;
   background-color: var(--red-light);
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #fee2e2;
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #fecaca;
   color: var(--red-dark);
   animation: shake 0.3s ease;
 }

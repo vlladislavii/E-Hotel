@@ -8,6 +8,7 @@ import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Loading from '../components/common/Loading'
 import StatusBadge from '../components/common/StatusBadge'
+import EmptyState from '../components/common/EmptyState'
 import styles from './PerformanceReportPage.module.css'
 
 function toMonthString(d) {
@@ -107,8 +108,12 @@ function PerformanceReportPage() {
               <tbody>
                 {reports.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className={styles.emptyRow}>
-                      No reports yet. Generate one for a month above.
+                    <td colSpan={6}>
+                      <EmptyState
+                        icon={FileBarChart}
+                        title="No reports yet"
+                        message="Generate a report for a month above to start building your archive."
+                      />
                     </td>
                   </tr>
                 ) : (

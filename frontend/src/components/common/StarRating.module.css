@@ -1,0 +1,14 @@
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  line-height: 0;
+}
+
+.filled {
+  color: #f59e0b;
+}
+
+.empty {
+  color: #d8dee9;
+}

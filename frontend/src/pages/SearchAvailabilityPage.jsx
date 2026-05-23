@@ -1,22 +1,26 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { MapPin, Bed } from 'lucide-react'
+import { MapPin, Bed, SearchX } from 'lucide-react'
 import { hotelsApi } from '../api/hotels'
 import { roomsApi } from '../api/rooms'
 import { ROOM_TYPES } from '../utils/constants'
 import { getMinDate } from '../utils/formatters'
+import { useToast } from '../hooks/useToast'
 import Header from '../components/layout/Header'
 import Card from '../components/common/Card'
 import Select from '../components/common/Select'
 import Input from '../components/common/Input'
 import Button from '../components/common/Button'
 import Loading from '../components/common/Loading'
+import StarRating from '../components/common/StarRating'
+import EmptyState from '../components/common/EmptyState'
 import styles from './SearchAvailabilityPage.module.css'
 
 function SearchAvailabilityPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const { showToast } = useToast()
 
   const [hotelId, setHotelId] = useState('all')
   const [roomType, setRoomType] = useState('')
@@ -62,7 +66,7 @@ function SearchAvailabilityPage() {
 
   const handleSearch = () => {
     if (dateFrom && dateTo && new Date(dateFrom) > new Date(dateTo)) {
-      alert('Check-out date must be after check-in date!')
+      showToast('Check-out date must be after check-in date!', 'error')
       return
     }
     setHasSearched(true)
@@ -160,9 +164,13 @@ function SearchAvailabilityPage() {
       {searchQuery.isLoading ? (
         <Loading />
       ) : rooms.length === 0 ? (
-        <div className={styles.noResults}>
-          No rooms available for the selected criteria.
-        </div>
+        <Card>
+          <EmptyState
+            icon={SearchX}
+            title="No rooms available"
+            message="No rooms match the selected criteria. Try different dates or another hotel."
+          />
+        </Card>
       ) : (
         <div className={styles.roomsList}>
           {rooms.map(room => (
@@ -170,9 +178,7 @@ function SearchAvailabilityPage() {
               <div className={styles.roomInfo}>
                 <div className={styles.hotelHeader}>
                   <h4 className={styles.hotelName}>{room.Hotel?.name || 'Unknown Hotel'}</h4>
-                  <span className={styles.stars}>
-                    {'⭐'.repeat(room.Hotel?.numberOfStars || 0)}
-                  </span>
+                  <StarRating count={room.Hotel?.numberOfStars || 0} size={14} />
                 </div>
                 <div className={styles.location}>
                   <MapPin size={14} />

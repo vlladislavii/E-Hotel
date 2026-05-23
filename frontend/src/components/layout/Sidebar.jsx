@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Hotel, LayoutDashboard, Building2, Search, CalendarCheck, FileBarChart, LogOut, Menu, X } from 'lucide-react'
+import { Hotel, LayoutDashboard, Building2, Search, CalendarCheck, FileBarChart, LogOut, Menu, X, User } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import styles from './Sidebar.module.css'
 
@@ -14,7 +14,7 @@ const navItems = [
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
-  const { logout } = useAuth()
+  const { logout, cashier } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -61,6 +61,19 @@ function Sidebar() {
         </nav>
 
         <div className={styles.footer}>
+          {cashier && (
+            <div className={styles.profile}>
+              <div className={styles.avatar}>
+                <User size={20} />
+              </div>
+              <div className={styles.profileInfo}>
+                <span className={styles.profileName}>{cashier.name}</span>
+                {cashier.username && (
+                  <span className={styles.profileRole}>@{cashier.username}</span>
+                )}
+              </div>
+            </div>
+          )}
           <button className={styles.logoutBtn} onClick={handleLogout}>
             <LogOut size={20} />
             <span>Logout</span>

@@ -1,18 +1,23 @@
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Search, CreditCard, Banknote, CheckCircle, Receipt } from 'lucide-react'
+import { Search, CreditCard, Banknote, CheckCircle, Receipt, AlertCircle, Moon, CalendarCheck, Archive } from 'lucide-react'
 import { bookingsApi } from '../api/bookings'
 import { formatDate, isGracePeriodExpired, formatCurrency } from '../utils/formatters'
+import { useToast } from '../hooks/useToast'
+import { useConfirm } from '../hooks/useConfirm'
 import Header from '../components/layout/Header'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import StatusBadge from '../components/common/StatusBadge'
 import Modal from '../components/common/Modal'
 import Loading from '../components/common/Loading'
+import EmptyState from '../components/common/EmptyState'
 import styles from './StayManagementPage.module.css'
 
 function StayManagementPage() {
   const queryClient = useQueryClient()
+  const { showToast } = useToast()
+  const confirm = useConfirm()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedBooking, setSelectedBooking] = useState(null)
   const [detailsModalOpen, setDetailsModalOpen] = useState(false)
@@ -32,7 +37,7 @@ function StayManagementPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
     },
-    onError: (err) => alert(err.message)
+    onError: (err) => showToast(err.message, 'error')
   })
 
   const checkOutMutation = useMutation({
@@ -49,11 +54,12 @@ function StayManagementPage() {
 
   const extendMutation = useMutation({
     mutationFn: ({ number, newCheckOutDate }) => bookingsApi.extend(number, newCheckOutDate),
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       setExtendModalOpen(false)
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
+      showToast(`Stay ${variables.number} extended successfully!`, 'success')
     },
-    onError: (err) => alert(err.message)
+    onError: (err) => showToast(err.message, 'error')
   })
 
   const cancelMutation = useMutation({
@@ -62,7 +68,7 @@ function StayManagementPage() {
       setDetailsModalOpen(false)
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
     },
-    onError: (err) => alert(err.message)
+    onError: (err) => showToast(err.message, 'error')
   })
 
   const invalidMutation = useMutation({
@@ -71,7 +77,7 @@ function StayManagementPage() {
       setDetailsModalOpen(false)
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
     },
-    onError: (err) => alert(err.message)
+    onError: (err) => showToast(err.message, 'error')
   })
 
   const filteredBookings = useMemo(() => {
@@ -133,16 +139,30 @@ function StayManagementPage() {
     })
   }
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     if (!selectedBooking) return
-    if (window.confirm('Are you sure you want to cancel this booking?')) {
+    const ok = await confirm({
+      title: 'Cancel Reservation',
+      message: 'Are you sure you want to cancel this booking? This action cannot be undone.',
+      confirmText: 'Cancel Reservation',
+      cancelText: 'Keep Booking',
+      variant: 'danger',
+    })
+    if (ok) {
       cancelMutation.mutate(selectedBooking.number)
     }
   }
 
-  const handleMarkInvalid = () => {
+  const handleMarkInvalid = async () => {
     if (!selectedBooking) return
-    if (window.confirm('Mark this booking as invalid?')) {
+    const ok = await confirm({
+      title: 'Mark as Invalid',
+      message: 'Mark this booking as invalid? This action cannot be undone.',
+      confirmText: 'Mark as Invalid',
+      cancelText: 'Go Back',
+      variant: 'danger',
+    })
+    if (ok) {
       invalidMutation.mutate(selectedBooking.number)
     }
   }
@@ -205,7 +225,13 @@ function StayManagementPage() {
             <tbody>
               {activeBookings.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className={styles.emptyRow}>No active bookings</td>
+                  <td colSpan={8}>
+                    <EmptyState
+                      icon={CalendarCheck}
+                      title="No active bookings"
+                      message="Confirmed and checked-in stays will appear here."
+                    />
+                  </td>
                 </tr>
               ) : (
                 activeBookings.map(booking => (
@@ -281,7 +307,13 @@ function StayManagementPage() {
             <tbody>
               {pastBookings.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className={styles.emptyRow}>No past bookings</td>
+                  <td colSpan={8}>
+                    <EmptyState
+                      icon={Archive}
+                      title="No past bookings"
+                      message="Completed, canceled, and invalid stays will be archived here."
+                    />
+                  </td>
                 </tr>
               ) : (
                 pastBookings.map(booking => (
@@ -387,6 +419,13 @@ function StayManagementPage() {
       >
         {selectedBooking && (
           <div>
+            <div className={styles.currentStay}>
+              <span className={styles.currentStayLabel}>Current checkout</span>
+              <span className={styles.currentStayValue}>
+                {formatDate(selectedBooking.checkOutDate)}
+              </span>
+            </div>
+
             <div className={styles.extendField}>
               <label>New Checkout Date</label>
               <input
@@ -401,27 +440,28 @@ function StayManagementPage() {
             {extendPreview && !extendPreview.error && (
               <div className={styles.extendPreview}>
                 <div className={styles.previewRow}>
-                  <span>Additional nights:</span>
+                  <span className={styles.previewLabel}>
+                    <Moon size={15} /> Additional nights
+                  </span>
                   <strong>{extendPreview.extraNights}</strong>
                 </div>
-                <div className={styles.previewRow} style={{ color: 'var(--green)' }}>
-                  <span>Extra charge:</span>
+                <div className={`${styles.previewRow} ${styles.previewCharge}`}>
+                  <span className={styles.previewLabel}>Extra charge</span>
                   <strong>+{formatCurrency(extendPreview.extraCharge)}</strong>
                 </div>
                 <div className={styles.previewDivider} />
-                <div className={styles.previewRow}>
-                  <span>New total cost:</span>
-                  <strong style={{ color: 'var(--blue)' }}>
-                    {formatCurrency(extendPreview.newTotal)}
-                  </strong>
+                <div className={`${styles.previewRow} ${styles.previewTotal}`}>
+                  <span>New total cost</span>
+                  <strong>{formatCurrency(extendPreview.newTotal)}</strong>
                 </div>
               </div>
             )}
 
             {extendPreview?.error && (
-              <p className={styles.extendError}>
-                Choose a date later than the current checkout date.
-              </p>
+              <div className={styles.extendWarning}>
+                <AlertCircle size={18} />
+                <span>Choose a date later than the current checkout date.</span>
+              </div>
             )}
 
             <div className={styles.extendActions}>

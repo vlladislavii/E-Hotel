@@ -3,38 +3,57 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 500;
+  padding: 0.75rem 1.15rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
   font-size: 0.95rem;
+  letter-spacing: -0.01em;
   cursor: pointer;
   border: none;
-  transition: all 0.2s;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
 /* Variants */
 .primary {
-  background: var(--blue);
+  background: var(--gradient-blue);
   color: white;
+  box-shadow: var(--shadow-blue);
 }
 
 .primary:hover:not(:disabled) {
-  background: var(--blue-dark);
+  box-shadow: 0 14px 28px -8px rgba(37, 99, 235, 0.6);
+  transform: translateY(-1px);
+}
+
+.accent {
+  background: var(--gradient-orange);
+  color: white;
+  box-shadow: var(--shadow-orange);
+}
+
+.accent:hover:not(:disabled) {
+  box-shadow: 0 14px 28px -8px rgba(249, 115, 22, 0.6);
+  transform: translateY(-1px);
 }
 
 .outline {
   background: white;
-  border: 2px solid var(--blue);
-  color: var(--blue);
+  border: 1.5px solid var(--blue-border);
+  color: var(--blue-dark);
 }
 
 .outline:hover:not(:disabled) {
   background: var(--blue-light);
+  border-color: var(--blue);
 }
 
 .ghost {
@@ -44,7 +63,8 @@
 }
 
 .ghost:hover:not(:disabled) {
-  background: #f3f4f6;
+  background: var(--gray-light);
+  border-color: var(--gray-border);
 }
 
 .danger {
@@ -69,16 +89,16 @@
 
 /* Sizes */
 .small {
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 0.8rem;
   font-size: 0.8rem;
 }
 
 .medium {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.15rem;
 }
 
 .large {
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.6rem;
   font-size: 1rem;
 }
 

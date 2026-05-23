@@ -16,15 +16,23 @@
 }
 
 .monthInput {
-  padding: 0.6rem 0.9rem;
-  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: 1rem;
   outline: none;
+  background: var(--white);
+  color: var(--text-main);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.monthInput:hover {
+  border-color: var(--blue-border);
 }
 
 .monthInput:focus {
   border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .tableCard {
@@ -42,18 +50,28 @@
 
 .table th {
   background: var(--gray-light);
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
 }
 
 .table td {
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--border);
   font-size: 0.9rem;
+}
+
+.table tbody tr {
+  transition: background var(--transition);
+}
+
+.table tbody tr:hover {
+  background: var(--blue-light);
 }
 
 .table tr:last-child td {
@@ -61,14 +79,8 @@
 }
 
 .period {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
-}
-
-.emptyRow {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 2rem !important;
 }
 
 .errorText {

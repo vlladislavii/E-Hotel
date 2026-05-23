@@ -1,12 +1,14 @@
 import { useState, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
-import { MapPin, Search } from 'lucide-react'
+import { MapPin, Search, Building2, Check, SearchX } from 'lucide-react'
 import { hotelsApi } from '../api/hotels'
 import Header from '../components/layout/Header'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Loading from '../components/common/Loading'
+import StarRating from '../components/common/StarRating'
+import EmptyState from '../components/common/EmptyState'
 import styles from './HotelCatalogPage.module.css'
 
 const STAR_FILTERS = [5, 4, 3]
@@ -100,7 +102,7 @@ function HotelCatalogPage() {
                   checked={selectedStars.includes(star)}
                   onChange={() => handleStarChange(star)}
                 />
-                {'⭐'.repeat(star)}
+                <StarRating count={star} size={14} />
               </label>
             ))}
           </div>
@@ -137,25 +139,35 @@ function HotelCatalogPage() {
           </div>
 
           {filteredHotels.length === 0 ? (
-            <div className={styles.noResults}>
-              No hotels found matching your filters.
-            </div>
+            <Card>
+              <EmptyState
+                icon={SearchX}
+                title="No hotels found"
+                message="Try adjusting your search or clearing the filters."
+              />
+            </Card>
           ) : (
             <div className={styles.grid}>
               {filteredHotels.map(hotel => (
                 <Card key={hotel.id} className={styles.hotelCard}>
-                  <h3 className={styles.hotelName}>{hotel.name}</h3>
-                  <div className={styles.stars}>
-                    {'⭐'.repeat(hotel.numberOfStars || 0)}
+                  <div className={styles.cardHead}>
+                    <div className={styles.hotelIcon}>
+                      <Building2 size={22} />
+                    </div>
+                    <div className={styles.cardHeadText}>
+                      <h3 className={styles.hotelName}>{hotel.name}</h3>
+                      <StarRating count={hotel.numberOfStars || 0} size={15} />
+                    </div>
                   </div>
                   <p className={styles.address}>
-                    <MapPin size={12} />
+                    <MapPin size={14} />
                     {hotel.address}
                   </p>
                   <div className={styles.services}>
                     {(hotel.hotelServices || []).map(service => (
                       <span key={service.id} className={styles.serviceTag}>
-                        ✓ {service.name}
+                        <Check size={11} strokeWidth={3} />
+                        {service.name}
                       </span>
                     ))}
                   </div>
